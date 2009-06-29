@@ -3,7 +3,7 @@ using JetBrains.ProjectModel;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.Services;
 
-namespace ResharperTest
+namespace RogueSharper.BrowseToReflector
 {
     public static class TypeInterfaceUtil
     {
@@ -86,6 +86,18 @@ namespace ResharperTest
         public static ITypeMember GetTypeMember(this IDeclaredElement element)
         {
             return element as ITypeMember;
+        }
+
+        public static string GetAssemblyFile(this IDeclaredElement element )
+        {
+            var module = element.Module as IAssemblyPsiModule;
+            if (module == null)
+            {
+                return null;
+            }
+
+            return module.Assembly.GetFiles()[0].Location.FullPath;
+
         }
     }
 }

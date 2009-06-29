@@ -4,6 +4,7 @@ using System.Linq;
 using System.ServiceModel;
 using System.Text;
 using JetBrains.ActionManagement;
+using JetBrains.ReSharper.Psi;
 using RogueSharper.BrowseToReflector.Reflector;
 
 namespace RogueSharper.BrowseToReflector
@@ -18,21 +19,61 @@ namespace RogueSharper.BrowseToReflector
 
         public void Execute(IDataContext context, DelegateExecute nextExecute)
         {
-            var binding = new NetNamedPipeBinding(NetNamedPipeSecurityMode.None);
+            ReflectorFacade reflector = new ReflectorFacade();
 
-            var endpoint =
-                new EndpointAddress(
-                    "net.pipe://localhost/ReflectorBrowseService");
+            var declared =
+                context.GetData(
+                    JetBrains.ReSharper.Psi.Services.DataConstants.
+                        DECLARED_ELEMENT);
 
-            var client =
-               new ReflectorBrowseServiceClient(binding, endpoint);
+            bool succeeded = TryFindElement(declared, reflector);
 
-            client.Browse(
-                this.GetType().Assembly.ManifestModule.FullyQualifiedName,
-                this.GetType().FullName,
-                "Execute");
+
+            //reflector.Browse(
+            //    this.GetType().Assembly.ManifestModule.FullyQualifiedName,
+            //    this.GetType().FullName,
+            //    "Execute");
 
             nextExecute();
+        }
+
+        private static bool TryFindElement(IDeclaredElement declared, ReflectorFacade reflector)
+        {
+            bool instance;
+            var type = declared.GetTypeElement(out instance);
+            if (type != null)
+            {
+                var assemblyFile = type.GetAssemblyFile();
+
+                if (assemblyFile != null)
+                {
+                    reflector.Browse(assemblyFile, type.CLRName, "");
+
+                    return true;
+                }
+            }
+
+
+            var member = declared.GetTypeMember();
+
+            if (member != null)
+            {
+                var file = member.GetAssemblyFile();
+
+                if (file != null)
+                {
+                    reflector.Browse(
+                        file,
+                        member.GetContainingType().CLRName,
+                        member.ShortName
+                        );
+
+                    return true;
+                }
+                
+            }
+
+            return false;
         }
     }
 }
