@@ -31,9 +31,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Reflector, Version=5.0.0.0, Culture=neutral, PublicKeyToken=18ca6bb8dd6a03c3">
+      <ExecutableExtension>.exe</ExecutableExtension>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.ServiceModel">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -45,7 +51,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IReflector.cs" />
+    <Compile Include="IReflectorBrowseService.cs" />
+    <Compile Include="Package.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reflector.cs" />
+    <Compile Include="ReflectorBrowseService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Reflector.exe">
