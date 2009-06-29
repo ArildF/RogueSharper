@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RogueSharper.BrowseToReflector", "RogueSharper.BrowseToReflector\RogueSharper.BrowseToReflector.csproj", "{25C6D8D0-C7D3-49F1-AB36-9C7F3CFDC1A0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RogueSharper.ReflectorBrowseServicePlugin", "RogueSharper.ReflectorBrowseServicePlugin\RogueSharper.ReflectorBrowseServicePlugin.csproj", "{A8A693F7-8FB4-4D28-A1CC-863FDA6F34E4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{25C6D8D0-C7D3-49F1-AB36-9C7F3CFDC1A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{25C6D8D0-C7D3-49F1-AB36-9C7F3CFDC1A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{25C6D8D0-C7D3-49F1-AB36-9C7F3CFDC1A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8A693F7-8FB4-4D28-A1CC-863FDA6F34E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8A693F7-8FB4-4D28-A1CC-863FDA6F34E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8A693F7-8FB4-4D28-A1CC-863FDA6F34E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8A693F7-8FB4-4D28-A1CC-863FDA6F34E4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
