@@ -39,6 +39,8 @@ namespace RogueSharper.BrowseToReflector
 
         private static bool TryFindElement(IDeclaredElement declared, ReflectorFacade reflector)
         {
+           
+
             bool instance;
             var type = declared.GetTypeElement(out instance);
             if (type != null)
@@ -52,7 +54,6 @@ namespace RogueSharper.BrowseToReflector
                     return true;
                 }
             }
-
 
             var member = declared.GetTypeMember();
 
@@ -70,8 +71,10 @@ namespace RogueSharper.BrowseToReflector
 
                     return true;
                 }
-                
             }
+
+
+            
 
             return false;
         }

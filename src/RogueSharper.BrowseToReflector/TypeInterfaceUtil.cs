@@ -11,12 +11,11 @@ namespace RogueSharper.BrowseToReflector
         /// <summary>
         /// Gets type element from context 
         /// </summary>
-        /// <param name="context">Action context</param>
-        /// <param name="instance">If true, only instance memebers are relevant, e.g. context points to instance of type</param>
+        /// <param name="declaredElement">If true, only instance memebers are relevant, e.g. context points to instance of type</param>
+        /// <param name="instance"></param>
         /// <returns>ITypeElement instance or null</returns>
         public static ITypeElement GetTypeElement(this IDeclaredElement declaredElement, out bool instance)
         {
-
             // If we have type, just return it
             ITypeElement typeElement = declaredElement as ITypeElement;
             if (typeElement != null)
@@ -24,31 +23,6 @@ namespace RogueSharper.BrowseToReflector
                 instance = false;
                 return typeElement;
             }
-
-            // If it is constructor, return containing type
-            IConstructor constructor = declaredElement as IConstructor;
-            if (constructor != null)
-            {
-                instance = false;
-                return constructor.GetContainingType();
-            }
-
-            // Element has type attached to it, e.g. method return type, property or field type
-            ITypeOwner typeOwner = declaredElement as ITypeOwner;
-            if (typeOwner != null)
-            {
-                // It is instance of type, which is returned, so provide caller with this information
-                instance = true;
-                return GetTypeElement(typeOwner.Type);
-            }
-
-            //// Try to guess type of expression
-            //ITextControl textControl = context.GetData(IDE.DataConstants.TEXT_CONTROL);
-            //ISolution solution = context.GetData(IDE.DataConstants.SOLUTION);
-            //if (textControl != null && solution != null)
-            //{
-            //    // TODO: Implement expression processing
-            //}
 
             instance = false;
             return null;
