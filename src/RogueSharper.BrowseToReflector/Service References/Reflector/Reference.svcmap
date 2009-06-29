@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="81281f01-ff83-4aba-93a6-c8d02e7f6e6d" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:9999/ReflectorBrowseServiceMetadata" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="ReflectorBrowseService.wsdl" MetadataType="Wsdl" ID="69ffef6c-d8ea-41aa-bc94-bb558ac808d5" SourceId="1" SourceUrl="http://localhost:9999/ReflectorBrowseServiceMetadata" />
+    <MetadataFile FileName="ReflectorBrowseServiceMetadata.xsd" MetadataType="Schema" ID="3c3dd179-2a35-482c-89a7-928f7cfd417e" SourceId="1" SourceUrl="http://localhost:9999/ReflectorBrowseServiceMetadata?xsd=xsd0" />
+    <MetadataFile FileName="ReflectorBrowseServiceMetadata1.xsd" MetadataType="Schema" ID="63781224-a4a8-494d-961b-ab4cb8daaa29" SourceId="1" SourceUrl="http://localhost:9999/ReflectorBrowseServiceMetadata?xsd=xsd1" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>
