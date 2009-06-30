@@ -11,11 +11,13 @@ namespace RogueSharper.ReflectorBrowseServicePlugin
     {
         private readonly IAssemblyManager _manager;
         private readonly IAssemblyBrowser _browser;
+        private readonly IWindowManager _windowManager;
 
-        public Reflector(IAssemblyManager manager, IAssemblyBrowser browser)
+        public Reflector(IAssemblyManager manager, IAssemblyBrowser browser, IWindowManager windowManager)
         {
             this._manager = manager;
             this._browser = browser;
+            _windowManager = windowManager;
         }
 
         public void Browse(string assemblyPath, string typeName, string memberName)
@@ -59,6 +61,8 @@ namespace RogueSharper.ReflectorBrowseServicePlugin
                     }
                 }
             }
+
+            this._windowManager.Activate();
 
         }
 

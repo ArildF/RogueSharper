@@ -16,7 +16,10 @@ namespace RogueSharper.ReflectorBrowseServicePlugin
                           IAssemblyManager;
             var assemblyBrowser = serviceProvider.GetService(typeof (IAssemblyBrowser)) as
                           IAssemblyBrowser;
-            var reflector = new Reflector(assemblyManager, assemblyBrowser);
+            var windowManager =
+                serviceProvider.GetService(typeof (IWindowManager)) as
+                IWindowManager;
+            var reflector = new Reflector(assemblyManager, assemblyBrowser, windowManager);
             var reflectorBrowseService = new ReflectorBrowseService(reflector);
 
             this._serviceHost = new ServiceHost(reflectorBrowseService, new Uri("http://localhost:9999/ReflectorBrowseService"));
