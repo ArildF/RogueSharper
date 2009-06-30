@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Reflector;
@@ -50,10 +49,7 @@ namespace RogueSharper.ReflectorBrowseServicePlugin
                         var member = (from m in members
                                       where m.Name == memberName
                                       select m).FirstOrDefault();
-                        foreach (var enumerable in members)
-                        {
-                            Trace.WriteLine(enumerable.Name);
-                        }
+                       
                         if (member != null)
                         {
                             this._browser.ActiveItem = member;
