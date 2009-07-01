@@ -31,12 +31,6 @@ namespace RogueSharper.BrowseToReflector
 
         private void EnsureExists()
         {
-            if (File.Exists(_path))
-            {
-#if !DEBUG
-                return;
-#endif
-            }
 
             string dir = System.IO.Path.GetDirectoryName(_path);
             if (!Directory.Exists(dir))
