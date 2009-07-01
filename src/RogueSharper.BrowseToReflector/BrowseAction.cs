@@ -118,7 +118,7 @@ namespace RogueSharper.BrowseToReflector
                 }
             }
 
-            return null;
+            return ValidReflectorPath(path) ? path : null;
         }
 
         private static bool ValidReflectorPath(string path)
