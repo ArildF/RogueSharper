@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.ServiceModel;
-using System.Text;
 using System.Threading;
 using JetBrains.ActionManagement;
+using JetBrains.Application;
 using JetBrains.ReSharper.Psi;
-using RogueSharper.BrowseToReflector.Reflector;
 
 namespace RogueSharper.BrowseToReflector
 {
@@ -17,6 +13,11 @@ namespace RogueSharper.BrowseToReflector
     class BrowseAction : IActionHandler
     {
         private static readonly int RetryCount = 10;
+
+        private static readonly IQueryReflectorLocation _reflectorFinder =
+            new ReflectorFinder();
+
+        private static readonly string ReflectorLocationSettingName = typeof (BrowseAction).Namespace + ".ReflectorLocation";
 
         public bool Update(IDataContext context, ActionPresentation presentation, DelegateUpdate nextUpdate)
         {
@@ -32,7 +33,7 @@ namespace RogueSharper.BrowseToReflector
                     JetBrains.ReSharper.Psi.Services.DataConstants.
                         DECLARED_ELEMENT);
 
-            bool succeeded = TryBrowseElement(declared, reflector);
+            TryBrowseElement(declared, reflector);
 
             nextExecute();
         }
@@ -69,6 +70,11 @@ namespace RogueSharper.BrowseToReflector
                 string configFile = GetConfigFile();
                 string reflectorExe = GetReflectorExe();
 
+                if (!ValidReflectorPath(reflectorExe))
+                {
+                    return false;
+                }
+
                 ReflectorRunner runner = new ReflectorRunner(configFile, reflectorExe);
                 runner.Run();
 
@@ -91,8 +97,33 @@ namespace RogueSharper.BrowseToReflector
 
         private static string GetReflectorExe()
         {
-            return
-                @"C:\mydocs\vcsharp\RogueSharper\src\RogueSharper.ReflectorBrowseServicePlugin\bin\Debug\Reflector.exe";
+
+            string path =
+#if DEBUG
+                null;
+#else
+                GlobalSettingsTable.Instance.GetString(
+                    ReflectorLocationSettingName);
+#endif
+            if (!ValidReflectorPath(path))
+            {
+                path = _reflectorFinder.GetReflectorLocation();
+
+                if(ValidReflectorPath(path))
+                {
+                    GlobalSettingsTable.Instance.SetString(
+                        ReflectorLocationSettingName, path);
+
+                    return path;
+                }
+            }
+
+            return null;
+        }
+
+        private static bool ValidReflectorPath(string path)
+        {
+            return !String.IsNullOrEmpty(path) && File.Exists(path);
         }
 
         private static string GetConfigFile()
