@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="220b4a00-f3fd-41d6-bead-1a0badabcc79" Name="Setup" Language="1033" Version="1.0.0.0" Manufacturer="Setup" UpgradeCode="ff3fbc07-3c51-48ba-bf6f-f1bee0bd97d6">
+		<Package InstallerVersion="200" Compressed="yes" />
+
+    <!-- A two-component version of R# we're targeting. -->
+    <Property Id="RESHARPERVERSION2" Value="4.5" Secure="yes" />
+
+    <!-- Version of the Visual Studio we install under. -->
+    <Property Id="VSVERSION" Value="9.0" Secure="yes" />
+
+    <Property Id="ApplicationFolderName" Value="RogueSharper.BrowseToReflector" />
+
+    <Property Id="WixAppFolder" Value="WixPerUserFolder" />
+
+    <!-- Root Suffix that together with VSVERSION defines the hive of the Visual Studio we install under. Allows to use an experimental hive. -->
+    <!-- Set this property on the command-line to install for another root suffix. -->
+    <Property Id="VSROOTSUFFIX" Secure="yes" />
+
+		<Media Id="1" Cabinet="media1.cab" EmbedCab="yes" />
+
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+        <Directory Id="APPLICATIONFOLDER" Name="[ApplicationFolderName]">
+          <!-- Install the plugin assembly. -->
+          <Component Id="C.ResharperPlugin" Guid="85B17580-64C2-4e95-AF1F-26E63F97C6EC" Location="local">
+            <File Id="F.ResharperPluginAssembly" Checksum="yes" DiskId="1" KeyPath="yes" 
+                  Name="$(var.RogueSharper.BrowseToReflector.TargetFileName)" ReadOnly="yes" 
+                  Source="$(var.RogueSharper.BrowseToReflector.TargetPath)" 
+                  Vital="yes" />
+          </Component>
+
+          <Component Id="C.ReflectorPlugin" Guid="C0B80C2D-E3EC-4a23-9354-F427DDDE9367" Location="local">
+            <File Id="F.ProductAssembly" Checksum="yes" DiskId="1" KeyPath="yes"
+                  Name="$(var.RogueSharper.ReflectorBrowseServicePlugin.TargetFileName)" ReadOnly="yes"
+                  Source="$(var.RogueSharper.ReflectorBrowseServicePlugin.TargetPath)"
+                  Vital="yes" />
+          </Component>
+
+          <!-- Cause the one-time-init to happen in R# after the plugin is installed, either per-user or all-users. -->
+          <Component Id="C.OneTimeInit" Guid="1DA656F8-2698-4aea-993C-6AD8A8DE816A" Location="local">
+            <RegistryValue Id="R.OneTimeInit" Root="HKMU" Key="Software\JetBrains\ReSharper\v[RESHARPERVERSION2]\vs[VSVERSION][VSROOTSUFFIX]" 
+                           Name="One-Time Initialization Generation" Value="[Date]T[Time]" Type="string" Action="write" KeyPath="yes" />
+          </Component>
+
+        </Directory>
+			</Directory>
+		</Directory>
+
+		<Feature Id="ProductFeature" Title="Setup" Level="1">
+      <ComponentRef Id="C.ResharperPlugin"/>
+      <ComponentRef Id="C.ReflectorPlugin"/>
+      <ComponentRef Id="C.OneTimeInit"/>
+		</Feature>
+
+
+
+    <!-- Locate the R# installdir. -->
+    <Property Id="RESHARPERINSTALLDIR" Secure="yes">
+      <RegistrySearch Id="AS.ReSharperBinariesDir" Root="HKLM" Key="Software\JetBrains\ReSharper\v[RESHARPERVERSION2]\vs[VSVERSION][VSROOTSUFFIX]" Name="InstallDir" Type="directory" />
+    </Property>
+
+    <!-- Assign the installation folder for the all users / current user scenarios. -->
+    <CustomAction Id="WixSetDefaultPerMachineFolder.Custom" Property="WixPerMachineFolder" Value="[ProgramFilesFolder]JetBrains\ReSharper\v[RESHARPERVERSION2]\vs[VSVERSION][VSROOTSUFFIX]\Bin\Plugins\[ApplicationFolderName]" Execute="immediate" />
+    <!-- Per-machine folder, as for the default installation dir. -->
+    <CustomAction Id="WixSetDefaultPerMachineFolder.InstallDir" Property="WixPerMachineFolder" Value="[RESHARPERINSTALLDIR]\Plugins\[ApplicationFolderName]" Execute="immediate" />
+    <!-- Per-machine folder, as specified by the InstallDir (preferred, if available). -->
+    <CustomAction Id="WixSetDefaultPerUserFolder.Custom" Property="WixPerUserFolder" Value="[LocalAppDataFolder]JetBrains\ReSharper\v[RESHARPERVERSION2]\vs[VSVERSION][VSROOTSUFFIX]\Plugins\[ApplicationFolderName]" Execute="immediate" />
+    <!-- Per-user folder in the application data. -->
+    <InstallExecuteSequence>
+      <Custom Action="WixSetDefaultPerMachineFolder.Custom" Before="WixSetPerMachineFolder">Not RESHARPERINSTALLDIR</Custom>
+      <Custom Action="WixSetDefaultPerMachineFolder.InstallDir" Before="WixSetPerMachineFolder">RESHARPERINSTALLDIR</Custom>
+      <Custom Action="WixSetDefaultPerUserFolder.Custom" Before="WixSetPerUserFolder" />
+    </InstallExecuteSequence>
+    <InstallUISequence>
+      <Custom Action="WixSetDefaultPerMachineFolder.Custom" Before="WixSetPerMachineFolder">Not RESHARPERINSTALLDIR</Custom>
+      <Custom Action="WixSetDefaultPerMachineFolder.InstallDir" Before="WixSetPerMachineFolder">RESHARPERINSTALLDIR</Custom>
+      <Custom Action="WixSetDefaultPerUserFolder.Custom" Before="WixSetPerUserFolder" />
+    </InstallUISequence>
+
+    <!--<UIRef Id="WixUI_Minimal"/>-->
+
+  </Product>
+</Wix>
