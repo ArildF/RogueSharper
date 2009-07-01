@@ -27,11 +27,13 @@ namespace RogueSharper.ReflectorBrowseServicePlugin
                                             new NetNamedPipeBinding(NetNamedPipeSecurityMode.None),
                                             "net.pipe://localhost/ReflectorBrowseService");
 
+#if DEBUG
             ServiceMetadataBehavior behavior = new ServiceMetadataBehavior();
             behavior.HttpGetEnabled = true;
             behavior.HttpGetUrl = new Uri("http://localhost:9999/ReflectorBrowseServiceMetadata");
 
             this._serviceHost.Description.Behaviors.Add(behavior);
+#endif
 
             try
             {
