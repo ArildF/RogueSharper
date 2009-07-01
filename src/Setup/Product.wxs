@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="220b4a00-f3fd-41d6-bead-1a0badabcc79" Name="Setup" Language="1033" Version="1.0.0.0" Manufacturer="Setup" UpgradeCode="ff3fbc07-3c51-48ba-bf6f-f1bee0bd97d6">
+	<Product Id="220b4a00-f3fd-41d6-bead-1a0badabcc79" Name="RogueSharper" Language="1033" Version="0.1.0.0" Manufacturer="Setup" UpgradeCode="ff3fbc07-3c51-48ba-bf6f-f1bee0bd97d6">
 		<Package InstallerVersion="200" Compressed="yes" />
 
     <!-- A two-component version of R# we're targeting. -->
@@ -47,9 +47,11 @@
 			</Directory>
 		</Directory>
 
-		<Feature Id="ProductFeature" Title="Setup" Level="1">
-      <ComponentRef Id="C.ResharperPlugin"/>
-      <ComponentRef Id="C.ReflectorPlugin"/>
+		<Feature Id="F.ProductFeature" Title="RogueSharper" Level="1">
+      <Feature Id="F.BrowseToReflector" Level="1" Title="Browse To Reflector">
+        <ComponentRef Id="C.ResharperPlugin"/>
+        <ComponentRef Id="C.ReflectorPlugin"/>
+      </Feature>
       <ComponentRef Id="C.OneTimeInit"/>
 		</Feature>
 
