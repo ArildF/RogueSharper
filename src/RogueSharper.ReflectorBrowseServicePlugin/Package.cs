@@ -45,7 +45,15 @@ namespace RogueSharper.ReflectorBrowseServicePlugin
 
         public void Unload()
         {
-            this._serviceHost.Close();
+            if (this._serviceHost.State == CommunicationState.Opened)
+            {
+                this._serviceHost.Close();
+            }
+            else
+            {
+                this._serviceHost.Abort();
+            }
+            
         }
     }
 }
