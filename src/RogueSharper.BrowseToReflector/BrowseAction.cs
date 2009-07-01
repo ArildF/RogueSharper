@@ -65,6 +65,11 @@ namespace RogueSharper.BrowseToReflector
 
         private static bool EnsureReflectorRunning(ReflectorFacade reflector)
         {
+            if (reflector.IsRunning())
+            {
+                return true;
+            }
+
             string configFile = GetConfigFile();
             string reflectorExe = GetReflectorExe();
 
