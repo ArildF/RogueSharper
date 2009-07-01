@@ -112,6 +112,7 @@
     <Compile Include="ElementFinder.cs" />
     <Compile Include="IQueryReflectorLocation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReflectorConfigFile.cs" />
     <Compile Include="ReflectorFacade.cs" />
     <Compile Include="ReflectorFinder.cs" />
     <Compile Include="ReflectorRunner.cs" />
@@ -145,6 +146,12 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\Reflector\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RogueSharper.ReflectorBrowseServicePlugin\RogueSharper.ReflectorBrowseServicePlugin.csproj">
+      <Project>{A8A693F7-8FB4-4D28-A1CC-863FDA6F34E4}</Project>
+      <Name>RogueSharper.ReflectorBrowseServicePlugin</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
