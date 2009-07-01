@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ServiceModel;
+using System.Threading;
 
 namespace RogueSharper.ReflectorBrowseServicePlugin
 {
@@ -7,10 +8,12 @@ namespace RogueSharper.ReflectorBrowseServicePlugin
     public class ReflectorBrowseService : IReflectorBrowseService
     {
         private readonly IReflector _reflector;
+        private readonly SynchronizationContext _synchronizationContext;
 
         public ReflectorBrowseService(IReflector reflector)
         {
             this._reflector = reflector;
+            _synchronizationContext = SynchronizationContext.Current;
         }
 
         public void Ping()
@@ -20,7 +23,8 @@ namespace RogueSharper.ReflectorBrowseServicePlugin
 
         public void Browse(string assembly, string type, string member)
         {
-            this._reflector.Browse(assembly, type, member);
+            _synchronizationContext.Post(_ => 
+                this._reflector.Browse(assembly, type, member), null);
         }
     }
 }
