@@ -12,6 +12,9 @@ namespace RogueSharper.ReflectorBrowseServicePlugin
     public interface IReflectorBrowseService
     {
         [OperationContract]
+        void Ping();
+
+        [OperationContract]
         void Browse(string assembly, string type, string member);
     }
 }

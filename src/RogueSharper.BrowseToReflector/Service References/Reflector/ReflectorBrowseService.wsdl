@@ -14,6 +14,12 @@
       <xsd:import schemaLocation="http://localhost:9999/ReflectorBrowseServiceMetadata?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
     </xsd:schema>
   </wsdl:types>
+  <wsdl:message name="IReflectorBrowseService_Ping_InputMessage">
+    <wsdl:part name="parameters" element="tns:Ping" />
+  </wsdl:message>
+  <wsdl:message name="IReflectorBrowseService_Ping_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PingResponse" />
+  </wsdl:message>
   <wsdl:message name="IReflectorBrowseService_Browse_InputMessage">
     <wsdl:part name="parameters" element="tns:Browse" />
   </wsdl:message>
@@ -21,6 +27,10 @@
     <wsdl:part name="parameters" element="tns:BrowseResponse" />
   </wsdl:message>
   <wsdl:portType name="IReflectorBrowseService">
+    <wsdl:operation name="Ping">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReflectorBrowseService/Ping" message="tns:IReflectorBrowseService_Ping_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReflectorBrowseService/PingResponse" message="tns:IReflectorBrowseService_Ping_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="Browse">
       <wsdl:input wsaw:Action="http://tempuri.org/IReflectorBrowseService/Browse" message="tns:IReflectorBrowseService_Browse_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IReflectorBrowseService/BrowseResponse" message="tns:IReflectorBrowseService_Browse_OutputMessage" />
@@ -29,6 +39,15 @@
   <wsdl:binding name="NetNamedPipeBinding_IReflectorBrowseService" type="tns:IReflectorBrowseService">
     <wsp:PolicyReference URI="#NetNamedPipeBinding_IReflectorBrowseService_policy" />
     <soap12:binding transport="http://schemas.microsoft.com/soap/named-pipe" />
+    <wsdl:operation name="Ping">
+      <soap12:operation soapAction="http://tempuri.org/IReflectorBrowseService/Ping" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="Browse">
       <soap12:operation soapAction="http://tempuri.org/IReflectorBrowseService/Browse" style="document" />
       <wsdl:input>

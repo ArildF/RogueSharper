@@ -1,4 +1,5 @@
-﻿using System.ServiceModel;
+﻿using System;
+using System.ServiceModel;
 
 namespace RogueSharper.ReflectorBrowseServicePlugin
 {
@@ -10,6 +11,11 @@ namespace RogueSharper.ReflectorBrowseServicePlugin
         public ReflectorBrowseService(IReflector reflector)
         {
             this._reflector = reflector;
+        }
+
+        public void Ping()
+        {
+            // nothing
         }
 
         public void Browse(string assembly, string type, string member)

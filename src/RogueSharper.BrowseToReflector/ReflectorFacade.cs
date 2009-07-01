@@ -16,6 +16,21 @@ namespace RogueSharper.BrowseToReflector
             client.Browse(assemblyFile, typeName, memberName);
         }
 
+        public bool IsRunning()
+        {
+            try
+            {
+                var client = CreateClient();
+                client.Ping();
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
         private static ReflectorBrowseServiceClient CreateClient()
         {
             var binding = new NetNamedPipeBinding(NetNamedPipeSecurityMode.None);

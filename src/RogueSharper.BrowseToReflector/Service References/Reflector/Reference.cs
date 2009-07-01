@@ -15,6 +15,9 @@ namespace RogueSharper.BrowseToReflector.Reflector {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="Reflector.IReflectorBrowseService")]
     public interface IReflectorBrowseService {
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReflectorBrowseService/Ping", ReplyAction="http://tempuri.org/IReflectorBrowseService/PingResponse")]
+        void Ping();
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReflectorBrowseService/Browse", ReplyAction="http://tempuri.org/IReflectorBrowseService/BrowseResponse")]
         void Browse(string assembly, string type, string member);
     }
@@ -44,6 +47,10 @@ namespace RogueSharper.BrowseToReflector.Reflector {
         
         public ReflectorBrowseServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
+        }
+        
+        public void Ping() {
+            base.Channel.Ping();
         }
         
         public void Browse(string assembly, string type, string member) {
