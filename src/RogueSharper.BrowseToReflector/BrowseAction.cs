@@ -26,55 +26,22 @@ namespace RogueSharper.BrowseToReflector
                     JetBrains.ReSharper.Psi.Services.DataConstants.
                         DECLARED_ELEMENT);
 
-            bool succeeded = TryFindElement(declared, reflector);
-
-
-            //reflector.Browse(
-            //    this.GetType().Assembly.ManifestModule.FullyQualifiedName,
-            //    this.GetType().FullName,
-            //    "Execute");
+            bool succeeded = TryBrowseElement(declared, reflector);
 
             nextExecute();
         }
 
-        private static bool TryFindElement(IDeclaredElement declared, ReflectorFacade reflector)
+        private static bool TryBrowseElement(IDeclaredElement declared, ReflectorFacade reflector)
         {
-           
+            var finder = new ElementFinder();
+            Element element = finder.FindElement(declared);
 
-            bool instance;
-            var type = declared.GetTypeElement(out instance);
-            if (type != null)
+            if (element != Element.NotFound)
             {
-                var assemblyFile = type.GetAssemblyFile();
+                reflector.Browse(element.AssemblyFile, element.TypeName, element.MemberName);
 
-                if (assemblyFile != null)
-                {
-                    reflector.Browse(assemblyFile, type.CLRName, "");
-
-                    return true;
-                }
+                return true;
             }
-
-            var member = declared.GetTypeMember();
-
-            if (member != null)
-            {
-                var file = member.GetAssemblyFile();
-
-                if (file != null)
-                {
-                    reflector.Browse(
-                        file,
-                        member.GetContainingType().CLRName,
-                        member.ShortName
-                        );
-
-                    return true;
-                }
-            }
-
-
-            
 
             return false;
         }

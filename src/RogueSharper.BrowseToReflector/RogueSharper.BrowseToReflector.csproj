@@ -96,6 +96,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BrowseAction.cs" />
+    <Compile Include="ElementFinder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReflectorFacade.cs" />
     <Compile Include="Service References\Reflector\Reference.cs">
