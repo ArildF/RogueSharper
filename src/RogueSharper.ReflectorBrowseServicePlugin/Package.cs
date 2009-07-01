@@ -33,7 +33,14 @@ namespace RogueSharper.ReflectorBrowseServicePlugin
 
             this._serviceHost.Description.Behaviors.Add(behavior);
 
-            this._serviceHost.Open();
+            try
+            {
+                this._serviceHost.Open();
+            }
+            catch (AddressAlreadyInUseException)
+            {
+                // someone else running with this plugin, not much we can do
+            }
         }
 
         public void Unload()
