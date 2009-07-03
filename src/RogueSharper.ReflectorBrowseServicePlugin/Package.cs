@@ -22,7 +22,7 @@ namespace RogueSharper.ReflectorBrowseServicePlugin
             var reflector = new Reflector(assemblyManager, assemblyBrowser, windowManager);
             var reflectorBrowseService = new ReflectorBrowseService(reflector);
 
-            this._serviceHost = new ServiceHost(reflectorBrowseService, new Uri("http://localhost:9999/ReflectorBrowseService"));
+            this._serviceHost = new ServiceHost(reflectorBrowseService);
             this._serviceHost.AddServiceEndpoint(typeof (IReflectorBrowseService),
                                             new NetNamedPipeBinding(NetNamedPipeSecurityMode.None),
                                             "net.pipe://localhost/ReflectorBrowseService");
