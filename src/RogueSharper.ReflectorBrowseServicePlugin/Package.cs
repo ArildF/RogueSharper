@@ -32,7 +32,7 @@ namespace RogueSharper.ReflectorBrowseServicePlugin
             behavior.HttpGetEnabled = true;
             behavior.HttpGetUrl = new Uri("http://localhost:9999/ReflectorBrowseServiceMetadata");
 
-            this._serviceHost.Description.Behaviors.Add(behavior);
+            //this._serviceHost.Description.Behaviors.Add(behavior);
 #endif
 
             try
