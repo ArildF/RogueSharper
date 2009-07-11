@@ -21,7 +21,7 @@ namespace RogueSharper.ReflectorBrowseServicePlugin
 
         public void Browse(string assemblyPath, string typeName, string memberName)
         {
-            var assembly = this._manager.LoadFile(assemblyPath);
+            IAssembly assembly = this._manager.LoadFile(assemblyPath);
 
             this._browser.ActiveItem = assembly;
 
@@ -30,7 +30,7 @@ namespace RogueSharper.ReflectorBrowseServicePlugin
                 Func<ITypeDeclaration, bool> pred =
                     CreatePredicate(typeName);
 
-                var type = (from module in assembly.Modules.Cast<IModule>()
+                ITypeDeclaration type = (from module in assembly.Modules.Cast<IModule>()
                             from t in module.Types.Cast<ITypeDeclaration>()
                             where pred(t)
                             select t).FirstOrDefault();
@@ -46,7 +46,7 @@ namespace RogueSharper.ReflectorBrowseServicePlugin
                             .Concat(type.Properties.Cast<IMemberDeclaration>())
                             .Concat(type.Fields.Cast<IMemberDeclaration>());
 
-                        var member = (from m in members
+                        IMemberDeclaration member = (from m in members
                                       where m.Name == memberName
                                       select m).FirstOrDefault();
                        
