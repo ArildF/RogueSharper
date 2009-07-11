@@ -43,3 +43,5 @@ using JetBrains.UI.Application.PluginSupport;
 [assembly: PluginVendor("Me")]
 
 [assembly: ActionsXml("RogueSharper.BrowseToReflector.Actions.xml", Precompile = false)]
+
+[assembly: InternalsVisibleTo("RogueSharper.Tests")]
