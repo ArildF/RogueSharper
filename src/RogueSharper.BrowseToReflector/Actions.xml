@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <actions>
-  <insert group-id="VS#Code Window" position="last">
+  <insert group-id="VS#Code Window" anchor-id="FindUsages" position="before">
     <separator/>
     <action id="RogueSharper.BrowseToReflector.BrowseAction" text="Browse to Reflector" shortcut="Control+F12">
       <vs-shortcut>Control+F12</vs-shortcut>
