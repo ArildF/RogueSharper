@@ -12,6 +12,10 @@ namespace RogueSharper.Tests.BrowseToReflector
     [TestFixture]
     public class ElementFinderTest
     {
+        private const string _location = @"C:\assembly.dll";
+        private const string _typename = "System.Ding.Dong";
+        private const string _membername = "WitchIsDead";
+
         private MockFactory _factory = new MockFactory(MockBehavior.Loose)
             {
                 CallBase = true,
@@ -43,18 +47,25 @@ namespace RogueSharper.Tests.BrowseToReflector
         [Test]
         public void FindTypeMember()
         {
-            const string location = @"C:\assembly.dll";
-            const string typename = "System.Ding.Dong";
-
-            const string membername = "WitchIsDead";
-
-            var elt = _factory.DeclaredElementAsTypeMember(typename, membername, location);
+            var elt = _factory.DeclaredElementAsTypeMember(_typename, _membername, _location);
 
             Element found = _finder.FindElement(elt);
             Assert.That(found, Is.Not.SameAs(Element.NotFound));
-            Assert.That(found.AssemblyFile, Is.SamePath(location));
-            Assert.That(found.TypeName, Is.SameAs(typename));
-            Assert.That(found.MemberName, Is.SameAs(membername));
+            Assert.That(found.AssemblyFile, Is.SamePath(_location));
+            Assert.That(found.TypeName, Is.SameAs(_typename));
+            Assert.That(found.MemberName, Is.SameAs(_membername));
+        }
+
+        [Test]
+        public void FindTypeOwner()
+        {
+            var elt = _factory.DeclaredElementAsTypeOwner(_typename, _location);
+
+            Element found = _finder.FindElement(elt);
+            Assert.That(found, Is.Not.SameAs(Element.NotFound));
+            Assert.That(found.AssemblyFile, Is.SamePath(_location));
+            Assert.That(found.TypeName, Is.SameAs(_typename));
+            Assert.That(found.MemberName, Is.Empty);
         }
 
         [Test]

@@ -10,8 +10,7 @@ namespace RogueSharper.BrowseToReflector
     {
         public Element FindElement(IDeclaredElement declared)
         {
-            bool instance;
-            var type = declared.GetTypeElement(out instance);
+            ITypeElement type = declared.GetTypeElement();
             if (type != null)
             {
                 var assemblyFile = type.GetAssemblyFile();
@@ -38,6 +37,7 @@ namespace RogueSharper.BrowseToReflector
 
                 }
             }
+
 
             return Element.NotFound;
 

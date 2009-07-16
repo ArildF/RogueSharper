@@ -28,7 +28,7 @@ namespace RogueSharper.BrowseToReflector
         {
             ReflectorFacade reflector = new ReflectorFacade();
 
-            var declared =
+            IDeclaredElement declared =
                 context.GetData(
                     JetBrains.ReSharper.Psi.Services.DataConstants.
                         DECLARED_ELEMENT);

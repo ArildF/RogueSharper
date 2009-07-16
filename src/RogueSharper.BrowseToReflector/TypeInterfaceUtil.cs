@@ -14,17 +14,21 @@ namespace RogueSharper.BrowseToReflector
         /// <param name="declaredElement">If true, only instance memebers are relevant, e.g. context points to instance of type</param>
         /// <param name="instance"></param>
         /// <returns>ITypeElement instance or null</returns>
-        public static ITypeElement GetTypeElement(this IDeclaredElement declaredElement, out bool instance)
+        public static ITypeElement GetTypeElement(this IDeclaredElement declaredElement)
         {
             // If we have type, just return it
             ITypeElement typeElement = declaredElement as ITypeElement;
             if (typeElement != null)
             {
-                instance = false;
                 return typeElement;
             }
 
-            instance = false;
+            ITypeOwner owner = declaredElement as ITypeOwner;
+            if (owner != null)
+            {
+                return GetTypeElement(owner.Type);
+            }
+
             return null;
         }
 
